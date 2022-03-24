@@ -7,11 +7,11 @@ namespace Ejercicio_Herencia
         static void Main(string[] args)
         {
             List<Medico> listaMedicos = new List<Medico>();
+            List<Paciente> listaPacientes = new List<Paciente>();
             Console.WriteLine("Buenas! Bienvenido al hospital de Sant Pau. Que quieres hacer?");
-            opciones(listaMedicos);
-            
+            opciones(listaMedicos, listaPacientes);
         }
-        static void opciones(List<Medico> listaNurses)
+        static void opciones(List<Medico> listaNurses, List<Paciente> listaPatients)
         {
             Console.WriteLine(" Opcion 1) Dar de alta un medico");
             Console.WriteLine(" Opcion 2) Dar de alta un paciente (solo si hay medicos)");
@@ -28,33 +28,32 @@ namespace Ejercicio_Herencia
                     listaNurses.Add(crearMedico());
                     break;
                 case ConsoleKey.D2:
-                    crearPaciente(listaNurses);
+                    listaPatients.Add(crearPaciente(listaNurses, listaPatients));
                     Console.WriteLine("Paciente Creado!");
                     break;
                 case ConsoleKey.D3:
-                    //Console.WriteLine("\nOpcion 2)Dar de alta un paciente (solo si hay medicos)");
+                    listarTodoasPersonas(listaNurses, listaPatients);
                     break;
                 case ConsoleKey.D4:
                     listarMedicos(listaNurses);
- 
                     break;
                 case ConsoleKey.D5:
                     listarPacientesDeMedico(listaNurses);
                     break;
                 case ConsoleKey.D6:
-                    //Console.WriteLine("\nOpcion 2)Dar de alta un paciente (solo si hay medicos)");
+                    eliminarPaciente(listaPatients);
                     break;
                 case ConsoleKey.D7:
                     return;
                 default:
                     Console.Clear();
                     Console.WriteLine("Opcion no valida, vuelve a escoger");
-                    opciones(listaNurses);
+                    opciones(listaNurses, listaPatients);
                     break;
             }
             
             Console.WriteLine("\nQue quieres hacer ahora?");
-            opciones(listaNurses);
+            opciones(listaNurses, listaPatients);
             
         }
         static Medico crearMedico()
@@ -68,7 +67,7 @@ namespace Ejercicio_Herencia
             return new Medico(edad, especialidad, nombre);
         }
 
-        static Paciente crearPaciente(List<Medico>listamedicos)
+        static Paciente crearPaciente(List<Medico>listamedicos, List<Paciente> listapaciente)
         {
             if (listamedicos.Count == 0) return new Paciente(0, DateTime.Now, "NULL");
             Console.WriteLine("Escribe el nombre del Paciente a crear");
@@ -82,7 +81,11 @@ namespace Ejercicio_Herencia
                 Console.WriteLine($"{y + 1} - {listamedicos[y].getNombre()} de {listamedicos[y].getEspecialidad()}");
             }
             ConsoleKeyInfo keyPressed = Console.ReadKey();
-            try { listamedicos[int.Parse(keyPressed.KeyChar.ToString())-1].asignarleElPaciente(nuevoPaciente); } 
+            try 
+            { 
+                listamedicos[int.Parse(keyPressed.KeyChar.ToString())-1].asignarleElPaciente(nuevoPaciente);
+
+            } 
             catch { Console.WriteLine("No se ha añadido correctamente"); }
             return nuevoPaciente;
         }
@@ -96,7 +99,7 @@ namespace Ejercicio_Herencia
         }
         static void listarPacientesDeMedico(List<Medico> listamedicos)
         {
-            Console.WriteLine("De que medico quieres mirar los pacientes?");
+            Console.WriteLine(" De que medico quieres mirar los pacientes?");
             for (int y = 0; y < listamedicos.Count; y++)
             {
                 Console.WriteLine($"{y + 1} - {listamedicos[y].getNombre()} de {listamedicos[y].getEspecialidad()}");
@@ -112,7 +115,38 @@ namespace Ejercicio_Herencia
                     Console.Write($"\n {e+1} - {listamedicos[numeroMedicoAMirar].pacientesAsignados()[e].getNombre()} con {listamedicos[numeroMedicoAMirar].pacientesAsignados()[e].getEdad()} años");
                 }
             }
-            catch { Console.WriteLine("No se ha añadido correctamente"); }
+            catch { Console.WriteLine(" No se ha añadido correctamente"); }
+        }
+        static void eliminarPaciente(List<Paciente> listaPacientes)
+        {if (listaPacientes.Count != 0)
+            {
+                Console.WriteLine("Selecciona el paciente que quieras eliminar");
+                for (int w = 0; w < listaPacientes.Count; w++)
+                {
+                    Console.WriteLine($"{w + 1} - {listaPacientes[w].getNombre()} de {listaPacientes[w].getEdad()} años");
+                }
+                ConsoleKeyInfo keyPressed = Console.ReadKey();
+                listaPacientes.RemoveAt(int.Parse(keyPressed.KeyChar.ToString()) - 1);
+                Console.WriteLine(" Paciente Eliminado!");
+            }
+        else if (listaPacientes.Count == 0)
+            {
+                Console.WriteLine("No existe ningún paciente");
+            }
+        }
+
+        static void listarTodoasPersonas(List<Medico> listaMeddicos, List<Paciente> listapaciente)
+        {
+            Console.WriteLine("La lista de doctores es: ");
+            for (int i = 0; i < listaMeddicos.Count; i++)
+            {
+                Console.WriteLine($"{listaMeddicos[i].getNombre()} de la rama de {listaMeddicos[i].getEspecialidad()} con {listaMeddicos[i].getEdad()} años");
+            }
+            Console.WriteLine("\n y la lista de pacientes es: ");
+            for (int h = 0; h < listaMeddicos.Count; h++)
+            {
+                Console.WriteLine($"{listapaciente[h].getNombre()} con {listapaciente[h].getEdad()} años");
+            }
         }
     }
     class Persona 

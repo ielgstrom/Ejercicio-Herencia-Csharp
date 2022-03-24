@@ -10,7 +10,6 @@ namespace Ejercicio_Herencia
         private string especialidad;
         private string nombre;
         private List<Paciente> pacientesDeMedico = new List<Paciente>();
-        //private List<Medico> MedicosDeHospital = new List<Medico>();
 
         public Medico(int _edad, string _especialidad, string _nombre) :base(_edad, _nombre)
         {
@@ -22,11 +21,6 @@ namespace Ejercicio_Herencia
         public List<Paciente> pacientesAsignados()
         {
             return pacientesDeMedico;
-        }
-        public void darAltaPaciente(Paciente pacienteParaAlta, DateTime fechaDeAlta)
-        {
-            pacienteParaAlta.setAlta(fechaDeAlta);
-            pacientesDeMedico.Remove(pacienteParaAlta);
         }
 
         public void asignarleElPaciente(Paciente pacienteQueSeVaAAsignar)
