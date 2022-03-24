@@ -9,17 +9,14 @@ namespace Ejercicio_Herencia
         private int edad;
         private string especialidad;
         private string nombre;
-        private List<Paciente> pacientesDeMedico;
-        private List<Medico> MedicosDeHospital = new List<Medico>();
+        private List<Paciente> pacientesDeMedico = new List<Paciente>();
+        //private List<Medico> MedicosDeHospital = new List<Medico>();
 
         public Medico(int _edad, string _especialidad, string _nombre) :base(_edad, _nombre)
         {
             edad = _edad;
             especialidad = _especialidad;
             nombre = _nombre;
-            Console.WriteLine("1");
-            this.MedicosDeHospital.Add(new Medico(_edad, _especialidad, _nombre));
-            Console.WriteLine("2");
 
         }
         public List<Paciente> pacientesAsignados()
@@ -31,22 +28,16 @@ namespace Ejercicio_Herencia
             pacienteParaAlta.setAlta(fechaDeAlta);
             pacientesDeMedico.Remove(pacienteParaAlta);
         }
-        //static List<Medico> GetMedicos()
-        //{
-        //    return MedicosDeHospital;
-        //}
-        public void asignarPacienteAMedico(Paciente pacienteQueSeVaAAsignar)
+
+        public void asignarleElPaciente(Paciente pacienteQueSeVaAAsignar)
         {
             pacientesDeMedico.Add(pacienteQueSeVaAAsignar);
             
         }
-        public void ListarAMedicos()
-        {
-            for (int i=0; i<MedicosDeHospital.Count; i++)
-            {
-                Console.WriteLine($"El medico numero {i + 1} es {MedicosDeHospital[i].nombre} de la rama de {MedicosDeHospital[i].especialidad}");
-            }
-        }
+        //public void quitarPaciente
+        public string getNombre() { return nombre; }
+        public string getEspecialidad() { return especialidad; }
+        public int getEdad() { return edad; }
 
     }
 }
