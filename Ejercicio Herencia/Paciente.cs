@@ -19,6 +19,10 @@ namespace Ejercicio_Herencia
         public string getNombre() { return nombre; }
 
         public int getEdad() { return edad; }
+        public override string ToString()
+        {
+            return "Has utilizado el medoto ToString en la clase Paciente";
+        }
 
     }
 }

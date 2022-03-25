@@ -41,7 +41,7 @@ namespace Ejercicio_Herencia
                     listarPacientesDeMedico(listaNurses);
                     break;
                 case ConsoleKey.D6:
-                    eliminarPaciente(listaPatients);
+                    eliminarPaciente(listaPatients, listaNurses);
                     break;
                 case ConsoleKey.D7:
                     return;
@@ -49,7 +49,7 @@ namespace Ejercicio_Herencia
                     Console.Clear();
                     Console.WriteLine("Opcion no valida, vuelve a escoger");
                     opciones(listaNurses, listaPatients);
-                    break;
+                    return;
             }
             
             Console.WriteLine("\nQue quieres hacer ahora?");
@@ -117,7 +117,7 @@ namespace Ejercicio_Herencia
             }
             catch { Console.WriteLine(" No se ha añadido correctamente"); }
         }
-        static void eliminarPaciente(List<Paciente> listaPacientes)
+        static void eliminarPaciente(List<Paciente> listaPacientes, List<Medico> listamedicos)
         {if (listaPacientes.Count != 0)
             {
                 Console.WriteLine("Selecciona el paciente que quieras eliminar");
@@ -126,7 +126,12 @@ namespace Ejercicio_Herencia
                     Console.WriteLine($"{w + 1} - {listaPacientes[w].getNombre()} de {listaPacientes[w].getEdad()} años");
                 }
                 ConsoleKeyInfo keyPressed = Console.ReadKey();
+                for (int r=0; r<listamedicos.Count; r++)
+                {
+                    listamedicos[r].eliminarElPaciente(listaPacientes[int.Parse(keyPressed.KeyChar.ToString()) - 1]);
+                }
                 listaPacientes.RemoveAt(int.Parse(keyPressed.KeyChar.ToString()) - 1);
+
                 Console.WriteLine(" Paciente Eliminado!");
             }
         else if (listaPacientes.Count == 0)
@@ -162,13 +167,9 @@ namespace Ejercicio_Herencia
             nombre = _nombre;
 
         }
-        public void darAltaAMedico(Medico medico)
+        public override string ToString()
         {
-
-        }
-        public void ListarPersonas()
-        {
-
+            return "Has utilizado el medoto ToString en la clase Persona";
         }
     }
    

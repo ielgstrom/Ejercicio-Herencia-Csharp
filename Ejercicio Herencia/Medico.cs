@@ -28,10 +28,18 @@ namespace Ejercicio_Herencia
             pacientesDeMedico.Add(pacienteQueSeVaAAsignar);
             
         }
+        public void eliminarElPaciente(Paciente pacienteQueVasAEliminar)
+        {
+            pacientesDeMedico.Remove(pacienteQueVasAEliminar);
+        }
         //public void quitarPaciente
         public string getNombre() { return nombre; }
         public string getEspecialidad() { return especialidad; }
         public int getEdad() { return edad; }
+        public override string ToString()
+        {
+            return "Has utilizado el medoto ToString en la clase Medico";
+        }
 
     }
 }
